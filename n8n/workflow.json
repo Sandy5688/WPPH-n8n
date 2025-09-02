@@ -1,0 +1,102 @@
+{
+  "name": "Mock Data to WordPress (Webhook Triggered)",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "mock-to-wp",
+        "options": {}
+      },
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [0, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "return require('fs').readFileSync('/home/node/.n8n/mock-data.json', 'utf8');"
+      },
+      "name": "Read Mock Data",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "const data = JSON.parse(items[0].json);\nreturn data.map(entry => ({ json: {\n  title: entry.title,\n  content: entry.description,\n  tags: entry.tags.join(\", \"),\n  category: entry.category,\n  media_url: entry.media_url,\n  thumbnail_url: entry.thumbnail_url,\n  published_at: entry.published_at,\n  source: entry.source\n} }));"
+      },
+      "name": "Transform Data",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://sandbox-wp.local/wp-json/wp/v2/posts",
+        "method": "POST",
+        "jsonParameters": true,
+        "options": {},
+        "bodyParametersJson": "={{$json}}"
+      },
+      "name": "Push to WP (Stub)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [750, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "if (items.length > 0) {\n  console.log('✅ Success:', items.length, 'items processed.');\n} else {\n  console.error('❌ Failed: No items.');\n}\nreturn items;"
+      },
+      "name": "Log Result",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [1000, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read Mock Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Mock Data": {
+      "main": [
+        [
+          {
+            "node": "Transform Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform Data": {
+      "main": [
+        [
+          {
+            "node": "Push to WP (Stub)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Push to WP (Stub)": {
+      "main": [
+        [
+          {
+            "node": "Log Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true
+}

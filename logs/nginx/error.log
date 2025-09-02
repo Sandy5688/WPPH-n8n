@@ -1,0 +1,11 @@
+2025/09/02 21:37:28 [notice] 1#1: using the "epoll" event method
+2025/09/02 21:37:28 [notice] 1#1: nginx/1.29.1
+2025/09/02 21:37:28 [notice] 1#1: built by gcc 14.2.0 (Alpine 14.2.0) 
+2025/09/02 21:37:28 [notice] 1#1: OS: Linux 6.6.87.2-microsoft-standard-WSL2
+2025/09/02 21:37:28 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2025/09/02 21:37:28 [notice] 1#1: start worker processes
+2025/09/02 21:37:28 [notice] 1#1: start worker process 21
+2025/09/02 21:37:28 [notice] 1#1: start worker process 22
+2025/09/02 21:37:28 [notice] 1#1: start worker process 23
+2025/09/02 21:37:28 [notice] 1#1: start worker process 24
+2025/09/02 21:40:45 [warn] 21#21: *1 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/1/00/0000000001 while reading upstream, client: 172.18.0.1, server: sandbox.example.com, request: "GET /assets/index-ImfT7tFZ.js HTTP/1.1", upstream: "http://172.18.0.3:5678/assets/index-ImfT7tFZ.js", host: "localhost"

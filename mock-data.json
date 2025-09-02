@@ -1,0 +1,24 @@
+[
+  {
+    "id": "12345",
+    "title": "Sample Video Title A",
+    "description": "This is the description for video A.",
+    "tags": ["funny", "trending"],
+    "category": "Comedy",
+    "media_url": "https://cdn.example.com/videos/sample-video-a.mp4",
+    "thumbnail_url": "https://cdn.example.com/thumbnails/sample-video-a.jpg",
+    "published_at": "2025-09-02T10:00:00Z",
+    "source": "mock-data"
+  },
+  {
+    "id": "12346",
+    "title": "Sample Video Title B",
+    "description": "This is the description for video B.",
+    "tags": ["education", "science"],
+    "category": "Education",
+    "media_url": "https://cdn.example.com/videos/sample-video-b.mp4",
+    "thumbnail_url": "https://cdn.example.com/thumbnails/sample-video-b.jpg",
+    "published_at": "2025-09-03T11:30:00Z",
+    "source": "mock-data"
+  }
+]

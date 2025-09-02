@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    restart: always
+    environment:
+      - GENERIC_TIMEZONE=Africa/Lagos
+    volumes:
+      - ./n8n_data:/home/node/.n8n
+      - ./logs/n8n:/home/node/.n8n/logs
+    networks:
+      - wpph_net
+
+  nginx:
+    image: nginx:alpine
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/certs:/etc/letsencrypt
+      - ./logs/nginx:/var/log/nginx
+    networks:
+      - wpph_net
+
+networks:
+  wpph_net:
+    driver: bridge
