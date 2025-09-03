@@ -6,6 +6,11 @@ services:
     restart: always
     environment:
       - GENERIC_TIMEZONE=Africa/Lagos
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - DB_SQLITE_POOL_SIZE=2
+      - N8N_RUNNERS_ENABLED=true
+      # security: disable env access inside nodes unless you need it
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
     volumes:
       - ./n8n_data:/home/node/.n8n
       - ./logs/n8n:/home/node/.n8n/logs

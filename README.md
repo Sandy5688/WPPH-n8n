@@ -79,4 +79,16 @@ docker compose down
 ]
 ```
 
+## 🔔 Testing
+
+Trigger the workflow via webhook:
+
+- Test URL (n8n UI only):
+
+`http://localhost/webhook-test/mock-to-wp`
+
+- Production URL (requires workflow activation):
+
+` http://localhost/webhook/mock-to-wp`
+
 ---
