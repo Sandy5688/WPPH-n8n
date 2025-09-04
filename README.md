@@ -72,19 +72,31 @@ docker compose down
 ]
 ```
 
-## Testing
+### 🔧 Configuration
 
-Trigger the workflow via webhook:
+1. Copy `.env.example` → `.env` and adjust values.
+   - `N8N_HOST` → domain in production
+   - `WEBHOOK_URL` → external webhook URL
+   - `N8N_BASIC_AUTH_USER` / `N8N_BASIC_AUTH_PASSWORD` → secure creds
+   - `API_KEY` → WordPress connector token
 
-- Test URL (n8n UI only):
-
-`http://localhost/webhook-test/mock-to-wp`
-
-- Production URL (requires workflow activation):
-
-` http://<domain-name>/webhook/mock-to-wp`
+⚠️ `.env` is ignored by Git. Do not commit secrets.
 
 ---
+
+### 🚀 Testing
+
+**Local:**
+
+```bash
+curl -X GET http://localhost/webhook-test/mock-to-wp
+```
+
+##### Note that in production, endpoint will be:
+
+```bash
+https://<domain>/webhook/mock-to-wp
+```
 
 ## Logs
 

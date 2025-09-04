@@ -25,13 +25,22 @@
     },
     {
       "parameters": {
-        "_comment": "Replace the url beneath with actual WordPress Connector API endpoint and auth, sample API - https://your-wp-site.com/wp-json/connector/v1/push",
-        "url": "https://httpbin.org/post",
+        "url": "https://<domain>/wp-json/connector/v1/ingest",
         "requestMethod": "POST",
         "jsonParameters": true,
         "sendHeaders": true,
         "options": {},
-        "bodyParametersJson": "={{$json}}"
+        "bodyParametersJson": "={{$json}}",
+        "headerParameters": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{$env.API_KEY}}"
+          }
+        ]
       },
       "name": "Push to WordPress",
       "type": "n8n-nodes-base.httpRequest",
@@ -40,13 +49,24 @@
     },
     {
       "parameters": {
+        "functionCode": "return [\n  {\n    json: {\n      \"status\": \"success\",\n      \"forwarded\": true,\n      response: $json\n    }\n  }\n];"
+      },
+      "name": "Create JSON Payload",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [750, 300]
+    },
+    {
+      "parameters": {
         "responseMode": "lastNode",
-        "responseData": "allEntries"
+        "responseData": "allEntries",
+        "respondWith": "json",
+        "responseBody": "={{$json}}"
       },
       "name": "Respond to Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [750, 300]
+      "position": [1000, 300]
     }
   ],
   "connections": {
@@ -73,6 +93,17 @@
       ]
     },
     "Push to WordPress": {
+      "main": [
+        [
+          {
+            "node": "Create JSON Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create JSON Payload": {
       "main": [
         [
           {

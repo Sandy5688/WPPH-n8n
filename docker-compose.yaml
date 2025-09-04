@@ -4,25 +4,8 @@ services:
   n8n:
     image: n8nio/n8n:latest
     restart: always
-    environment:
-      - GENERIC_TIMEZONE=Africa/Lagos
-      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
-      - DB_SQLITE_POOL_SIZE=2
-      - N8N_RUNNERS_ENABLED=true
-      # security: disable env access inside nodes unless you need it
-      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
-
-      # Webhook settings for proper URL generation behind proxy
-      - N8N_HOST=localhost #Change to your domain name in production
-      - WEBHOOK_URL=http://localhost #Change to your domain name in production
-      - N8N_PROXY_HOPS=1
-
-      # Enable file logging
-      - N8N_LOG_OUTPUT=file
-      - N8N_LOG_FILE_LOCATION=/home/node/.n8n/logs/n8n.log
-      - N8N_LOG_LEVEL=info
-      - N8N_LOG_FILE_MAXSIZE=16 # MB
-      - N8N_LOG_FILE_MAXCOUNT=10
+    env_file:
+      - .env
     volumes:
       - ./n8n_data:/home/node/.n8n
       - ./logs/n8n:/home/node/.n8n/logs
