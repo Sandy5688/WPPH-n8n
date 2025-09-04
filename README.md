@@ -27,13 +27,6 @@ It’s designed as a **prototype** for automation and integration testing — fi
 
 ## ⚙️ Setup & Run
 
-### 1. Clone Repo
-
-```bash
-git clone https://github.com/Sandy5688/WPPH-n8n.git
-cd wpph-n8n
-```
-
 ### 2. Start Services
 
 ```bash
@@ -48,7 +41,7 @@ n8n will be available at:
 
 ```bash
 docker cp workflow.json wpph-n8n-1:/home/node/workflow.json
-docker exec -it wpph-n8n-1 n8n import:workflow --input=/home/node/workflow.json
+docker exec -it wpph-n8n-n8n-1 n8n import:workflow --input=/home/node/workflow.json
 ```
 
 ### 4. Stop Services
@@ -59,7 +52,7 @@ docker compose down
 
 ---
 
-## 📂 Mock Data Format
+## Mock Data Format
 
 `mock-data.json`:
 
@@ -79,7 +72,7 @@ docker compose down
 ]
 ```
 
-## 🔔 Testing
+## Testing
 
 Trigger the workflow via webhook:
 
@@ -89,6 +82,27 @@ Trigger the workflow via webhook:
 
 - Production URL (requires workflow activation):
 
-` http://localhost/webhook/mock-to-wp`
+` http://<domain-name>/webhook/mock-to-wp`
 
 ---
+
+## Logs
+
+Logs for nginx and n8n can be found in the ./logs directory
+
+### On Workflow Update
+
+- Save the file and run the following commands
+
+```bash
+docker cp workflow.json wpph-n8n-1:/home/node/workflow.json
+docker exec -it wpph-n8n-n8n-1 n8n import:workflow --input=/home/node/workflow.json
+```
+
+## Next Steps
+
+> Real API endpoints, keys, and production configs will be added later by DevOps/Merger. Current setup runs with mock data only.
+
+> [! NOTE]
+> Update https://httpbin.org/post placeholder in workflow.json with the actual WordPress Connector API.
+> Replace localhost with your actual domain name in both the n8n WEBHOOK_URL (Docker Compose file) and the Nginx configuration.
